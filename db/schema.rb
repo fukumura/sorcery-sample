@@ -10,20 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112143345) do
+ActiveRecord::Schema.define(version: 20170125134849) do
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "email",                      null: false
+    t.string   "email",                                  null: false
     t.string   "crypted_password"
     t.string   "salt"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.datetime "last_login_at"
     t.datetime "last_logout_at"
     t.datetime "last_activity_at"
     t.string   "last_login_from_ip_address"
+    t.integer  "failed_logins_count",        default: 0
+    t.datetime "lock_expires_at"
+    t.string   "unlock_token"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["last_logout_at", "last_activity_at"], name: "index_users_on_last_logout_at_and_last_activity_at", using: :btree
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", using: :btree
   end
 
 end
